@@ -1,0 +1,58 @@
+library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity cordic_sub_tb is
+end;
+
+architecture cordic_sub_tb_arq of cordic_sub_tb is
+
+	constant N: integer:=10;
+
+	component cordic_sub
+		generic(N: integer:= N; ETAPA: integer:= 3);
+		port(
+		z_i		: in std_logic_vector(N-1 downto 0);
+	    y_i		: in std_logic_vector(N-1 downto 0);
+	    x_i		: in std_logic_vector(N-1 downto 0);
+	    z_o		: out std_logic_vector(N-1 downto 0);
+	    y_o		: out std_logic_vector(N-1 downto 0);
+	    x_o		: out std_logic_vector(N-1 downto 0);
+		clk_i	: in std_logic;
+		rst_i	: in std_logic;
+		ena_i	: in std_logic
+		);
+	end component cordic_sub;
+
+	signal clk_tb	: std_logic := '0';
+	signal rst_tb	: std_logic := '1';
+	signal ena_tb	: std_logic := '1';
+	signal x_i_tb	: std_logic_vector(N-1 downto 0) := (others => '0');
+	signal y_i_tb	: std_logic_vector(N-1 downto 0) := (others => '0');
+	signal z_i_tb	: std_logic_vector(N-1 downto 0) := (others => '0');
+	signal x_o_tb	: std_logic_vector(N-1 downto 0);
+	signal y_o_tb	: std_logic_vector(N-1 downto 0);
+	signal z_o_tb	: std_logic_vector(N-1 downto 0);
+
+begin
+
+	clk_tb <= not clk_tb after 10 ns;
+	rst_tb <= '0' after 50 ns;
+	x_i_tb <= "0111011010" after 25 ns, (others => '0') after 45 ns, "0111011010" after 75 ns, (others => '0') after 105 ns, "1111011010" after 145 ns;
+	y_i_tb <= "1111011010" after 25 ns, (others => '0') after 45 ns, "1111011010" after 75 ns, (others => '0') after 105 ns, "0011011011" after 145 ns;
+	z_i_tb <= "0111011010" after 25 ns, (others => '0') after 45 ns, "0111011010" after 75 ns, (others => '0') after 105 ns, "1111011010" after 145 ns;
+	ena_tb <= '0' after 135 ns;
+
+	DUT: cordic_sub
+		port map(
+			clk_i 	=> clk_tb,
+			rst_i 	=> rst_tb,
+			ena_i 	=> ena_tb,
+			x_i	 	=> x_i_tb,
+			y_i	 	=> y_i_tb,
+			z_i	 	=> z_i_tb,
+			x_o	 	=> x_o_tb,
+			y_o	 	=> y_o_tb,
+			z_o	 	=> z_o_tb
+		);
+
+end;

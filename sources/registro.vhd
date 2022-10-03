@@ -12,6 +12,7 @@ entity registro is
 	);
 end;
 
+
 architecture registro_arq of registro is
 begin
 	process(clk_i, rst_i)
@@ -20,8 +21,8 @@ begin
 			q_o <= (others => '0');
 		elsif clk_i = '1' and clk_i'event then
 			if ena_i = '1' then
-				q_o <= d_i
+				q_o <= d_i;
 			end if;
 		end if;
 	end process;
-end;
+end registro_arq;
