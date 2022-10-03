@@ -6,10 +6,10 @@ end;
 
 architecture cordic_sub_tb_arq of cordic_sub_tb is
 
-	constant N: integer:=10;
+	constant N: integer:=16;
 
 	component cordic_sub
-		generic(N: integer:= N; ETAPA: integer:= 3);
+		generic(N: integer:= N; ETAPA: integer:= 7);
 		port(
 		z_i		: in std_logic_vector(N-1 downto 0);
 	    y_i		: in std_logic_vector(N-1 downto 0);
@@ -37,9 +37,9 @@ begin
 
 	clk_tb <= not clk_tb after 10 ns;
 	rst_tb <= '0' after 50 ns;
-	x_i_tb <= "0111011010" after 25 ns, (others => '0') after 45 ns, "0111011010" after 75 ns, (others => '0') after 105 ns, "1111011010" after 145 ns;
-	y_i_tb <= "1111011010" after 25 ns, (others => '0') after 45 ns, "1111011010" after 75 ns, (others => '0') after 105 ns, "0011011011" after 145 ns;
-	z_i_tb <= "0111011010" after 25 ns, (others => '0') after 45 ns, "0111011010" after 75 ns, (others => '0') after 105 ns, "1111011010" after 145 ns;
+	x_i_tb <= "0000000111011010" after 25 ns, "0001010111010010" after 45 ns, "0001001111011010" after 75 ns, "1011001111011010" after 105 ns, "0000001111011010" after 145 ns;
+	y_i_tb <= "0000001111011010" after 25 ns, "1100000011011010" after 45 ns, "0100001010001010" after 75 ns, "0011000111011010" after 105 ns, "0000000011011011" after 145 ns;
+	z_i_tb <= "0000000111011010" after 25 ns, "0100011111111011" after 45 ns, "0100100111011010" after 75 ns, "1001001101011010" after 105 ns, "0000001111011010" after 145 ns;
 	ena_tb <= '0' after 135 ns;
 
 	DUT: cordic_sub

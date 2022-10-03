@@ -1,13 +1,14 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use ieee.numeric_std.all;
+use IEEE.math_real.all;
 
 entity cordic_tb is
 end;
 
 architecture cordic_tb_arq of cordic_tb is
 
-	constant N: integer:=10;
+	constant N: integer:=16;
 
 	component cordic
 		generic(ETAPAS: integer:= 7; N: integer:= N);
@@ -37,11 +38,11 @@ architecture cordic_tb_arq of cordic_tb is
 begin
 
 	clk_tb <= not clk_tb after 10 ns;
-	rst_tb <= '0' after 500 ns;
-	x_i_tb <= "0010100011" after 25 ns, (others => '0') after 450 ns;
-	y_i_tb <= (others => '0') after 25 ns, (others => '0') after 450 ns;
-	z_i_tb <= "0010100011" after 25 ns, (others => '0') after 450 ns;
-	ena_tb <= '0' after 1305 ns;
+	rst_tb <= '0' after 50 ns;
+	x_i_tb <= "0000000111011010" after 25 ns, "0001010111010010" after 45 ns, "0001001111011010" after 75 ns, "1011001111011010" after 105 ns, "0000001111011010" after 145 ns;
+	y_i_tb <= "0000001111011010" after 25 ns, "1100000011011010" after 45 ns, "0100001010001010" after 75 ns, "0011000111011010" after 105 ns, "0000000011011011" after 145 ns;
+	z_i_tb <= "0000000111011010" after 25 ns, "0100011111111011" after 45 ns, "0100100111011010" after 75 ns, "1001001101011010" after 105 ns, "0000001111011010" after 145 ns;
+	ena_tb <= '0' after 135 ns;
 
 	DUT: cordic
 		port map(
