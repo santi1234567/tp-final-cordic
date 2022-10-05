@@ -78,10 +78,10 @@ begin
 				z_o	 	=> aux_z(i+1)
 			);
 	end generate;
-	g <= to_signed(integer(GAIN(ETAPAS)*real((2**N)-1)/real(2)/math_pi),N); -- uso valores entre 0 y 2pi.
-	--aux_z_scaled <= std_logic_vector(signed(aux_z(ETAPAS)) * g);
-	--aux_y_scaled <= std_logic_vector(signed(aux_y(ETAPAS)) * g);
-	--aux_x_scaled <= std_logic_vector(signed(aux_x(ETAPAS)) * g);
+	--g <= to_signed(integer(real(1)/GAIN(ETAPAS)*real((2**N)-1)),N); -- uso valores entre 0 y 2pi.
+	--aux_z_scaled <= std_logic_vector(signed(aux_z(ETAPAS+1)) * g);
+	--aux_y_scaled <= std_logic_vector(signed(aux_y(ETAPAS+1)) * g);
+	--aux_x_scaled <= std_logic_vector(signed(aux_x(ETAPAS+1)) * g);
 	--z_o <= aux_z_scaled(2*N-1 downto N);
 	--y_o <= aux_y_scaled(2*N-1 downto N);
 	--x_o <= aux_x_scaled(2*N-1 downto N);
