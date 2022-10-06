@@ -31,7 +31,6 @@ architecture cordic_sub_arq of cordic_sub is
 			q_o: out std_logic_vector(N-1 downto 0)
 		);
 	end component;
-
 	signal res_z, res_y, res_x: std_logic_vector(N-1 downto 0);
 	signal rot: signed(N-1 downto 0);
 	type T_ROTACION is array (0 to 7) of REAL;
@@ -50,8 +49,9 @@ begin
 	regY: registro generic map(N) port map(res_y, clk_i, '0', '1', y_o);
 	regX: registro generic map(N) port map(res_x, clk_i, '0', '1', x_o);
 	process(clk_i, rst_i)
-		constant cero: integer range 0 to N-1:= 0;
+		constant cero: integer:= 0;
 	begin
+		-- CORDIC MOTOR
 		rot <= to_signed(integer(ROTACION(ETAPA)*real((2**N)-1)/real(2)/math_pi),N); -- uso valores entre 0 y 2pi.
 		if signed(z_i) < cero then
 			res_z <= std_logic_vector(signed(z_i) + rot);

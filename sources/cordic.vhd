@@ -37,8 +37,22 @@ architecture cordic_arq of cordic is
 			ena_i	: in std_logic
 		);
 	end component;
-	type T_AUX_PIPELINE is array (0 to ETAPAS+1) of std_logic_vector(N-1 downto 0);
 
+	component cordic_pre_processor is
+		generic(N: integer:= N);
+		port(
+			z_i		: in std_logic_vector(N-1 downto 0);
+		    y_i		: in std_logic_vector(N-1 downto 0);
+		    x_i		: in std_logic_vector(N-1 downto 0);
+		    z_o		: out std_logic_vector(N-1 downto 0);
+		    y_o		: out std_logic_vector(N-1 downto 0);
+		    x_o		: out std_logic_vector(N-1 downto 0);
+			clk_i	: in std_logic;
+			rst_i	: in std_logic
+		);
+	end component;	
+
+	type T_AUX_PIPELINE is array (0 to ETAPAS+1) of std_logic_vector(N-1 downto 0);
 	signal aux_z, aux_y, aux_x: T_AUX_PIPELINE := (others =>(others => '0'));
 	signal aux_z_scaled, aux_y_scaled, aux_x_scaled: std_logic_vector(2*N-1 downto 0) := (others => '0');
 	signal g: signed(N-1 downto 0) := (others => '0');
@@ -55,10 +69,7 @@ architecture cordic_arq of cordic is
 		1.646743507);
 
 begin
-
-	aux_z(0) <= z_i;
-	aux_y(0) <= y_i;
-	aux_x(0) <= x_i;
+	pre_processor: cordic_pre_processor generic map(N) port map(z_i, y_i, x_i, aux_z(0), aux_y(0), aux_x(0), clk_i, rst_i);
 
 	cordicgen: for i in 0 to ETAPAS generate
 		cordic_sub_inst: cordic_sub
