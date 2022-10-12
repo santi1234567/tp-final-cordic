@@ -56,7 +56,6 @@ architecture cordic_arq of cordic is
 	signal aux_z, aux_y, aux_x: T_AUX_PIPELINE := (others =>(others => '0'));
 	signal aux_z_scaled, aux_y_scaled, aux_x_scaled: std_logic_vector(2*N-1 downto 0) := (others => '0');
 	signal g: signed(N-1 downto 0) := (others => '0');
-	signal ena_tb	: std_logic := '1';
 	type T_GAIN is array (0 to 7) of REAL;
 	constant GAIN : T_GAIN :=
 		(1.414213562,
@@ -89,13 +88,12 @@ begin
 				z_o	 	=> aux_z(i+1)
 			);
 	end generate;
-	--g <= to_signed(integer(real(1)/GAIN(ETAPAS)*real((2**N)-1)),N); -- uso valores entre 0 y 2pi.
-	--aux_z_scaled <= std_logic_vector(signed(aux_z(ETAPAS+1)) * g);
+	g <= to_signed(integer(real(1)/GAIN(ETAPAS)*real((2**N)-1)),N); -- uso valores entre 0 y 2pi.
+	--g <= to_signed(1,N);
 	--aux_y_scaled <= std_logic_vector(signed(aux_y(ETAPAS+1)) * g);
 	--aux_x_scaled <= std_logic_vector(signed(aux_x(ETAPAS+1)) * g);
-	--z_o <= aux_z_scaled(2*N-1 downto N);
-	--y_o <= aux_y_scaled(2*N-1 downto N);
-	--x_o <= aux_x_scaled(2*N-1 downto N);
+	--y_o <= aux_y_scaled(N-1 downto 0);
+	--x_o <= aux_x_scaled(N-1 downto 0);
 	z_o <= aux_z(ETAPAS+1);
 	y_o <= aux_y(ETAPAS+1);
 	x_o <= aux_x(ETAPAS+1);
