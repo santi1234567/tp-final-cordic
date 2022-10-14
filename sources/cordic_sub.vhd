@@ -62,9 +62,7 @@ begin
 			res_y <= std_logic_vector(signed(y_i) + shift_right(signed(x_i), ETAPA)); -- x_i shift ETAPA cantidad de veces a la derecha
 			res_x <= std_logic_vector(signed(x_i) - shift_right(signed(y_i), ETAPA)); -- y_i shift ETAPA cantidad de veces a la derecha
 		end if;
-		--report "Rotar: " & integer'image(to_integer(rot));--rot <= std_logic_vector(to_signed(natural(ROTACION(ETAPA)),N-1));
-		--report "Valor z_i: " & integer'image(to_integer(signed(z_i)));
-		--report "Resultado: " & integer'image(to_integer(signed(res_z)));
+		--report "Rotar: " & integer'image(to_integer(to_signed(integer(real(1)/real(1.646743507)*real((2**(N-1))-1)),N)));
 		--report "---";
 	end process;
 end cordic_sub_arq;
