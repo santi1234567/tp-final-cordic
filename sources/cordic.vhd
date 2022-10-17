@@ -99,7 +99,7 @@ begin
 
 	aux_y_scaled <= std_logic_vector(signed(aux_y(ETAPAS+1)) * g);
 	aux_x_scaled <= std_logic_vector(signed(aux_x(ETAPAS+1)) * g);
-	y_o <= aux_y_scaled(2*N-1 downto N);
-	x_o <= aux_x_scaled(2*N-1 downto N);
+	y_o <= aux_y_scaled(2*N-2 downto N-1);
+	x_o <= aux_x_scaled(2*N-2 downto N-1);
 	z_o <= aux_z(ETAPAS+1);
 end;
