@@ -20,7 +20,6 @@ end;
 architecture data_processor_arq of data_processor is
 	signal x_o, y_o : std_logic_vector(10 downto 0);
 	signal aux_x, aux_y :signed(N+10-1 downto 0);
-	--signal offset_x : unsigned()
 begin
 	process(clk_i, rst_i)
 		constant cero: integer:= 0;
@@ -48,8 +47,8 @@ begin
 		--report integer'image(to_integer(aux_x(25 downto 15)));
 		--report integer'image(to_integer(aux_y));
 		--report integer'image(to_integer(aux_y(25 downto 15)));
-		report "Dato y: " & integer'image(to_integer(signed(data_y_i))) & ", Dato z: " & integer'image(to_integer(signed(data_z_i)));
-		report "Pixel x: " & integer'image(to_integer(signed(x_o))) & ", Pixel y: " & integer'image(to_integer(signed(y_o)));
+		--report "Dato y: " & integer'image(to_integer(signed(data_y_i))) & ", Dato z: " & integer'image(to_integer(signed(data_z_i)));
+		--report "Pixel x: " & integer'image(to_integer(signed(x_o))) & ", Pixel y: " & integer'image(to_integer(signed(y_o)));
 		--report "---";
     end process;   
 end;
