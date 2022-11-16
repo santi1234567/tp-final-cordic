@@ -82,7 +82,6 @@ begin
     begin
         if rising_edge(clk_pin) then
             if active = '1' then
-                c <= (others => '0');
                 if rx_data_rdy = '1' then               
                     if data_read = '0' then
                         if high_low = '0' then
