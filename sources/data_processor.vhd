@@ -10,7 +10,8 @@ entity data_processor is
 	);
 	port(
         data_y_i, data_z_i		: in std_logic_vector(N-1 downto 0);
-		pixel_x_o, pixel_y_o	 : out std_logic_vector (9 downto 0):= (others => '0');
+		pixel_c_o : out std_logic_vector (18 downto 0):= (others => '0');
+		--pixel_x_o, pixel_y_o	 : out std_logic_vector (9 downto 0):= (others => '0');
 		clk_i	  				: in std_logic;
 		rst_i 			  		: in std_logic;
 		ena_i	  		  : in std_logic
@@ -20,6 +21,7 @@ end;
 architecture data_processor_arq of data_processor is
 	signal x_o, y_o : std_logic_vector(10 downto 0);
 	signal aux_x, aux_y :signed(N+10-1 downto 0);
+	signal aux_pixel : std_logic_vector(19 downto 0);
 	constant cero: integer:= 0;
 
 	constant fist_pixel_y: integer:= 80;
@@ -38,8 +40,10 @@ begin
 	aux_y<=signed(data_z_i(N-1 downto 0))*to_signed(offset_pixel, 10);
 	y_o <= std_logic_vector(to_signed(center_pixel_z,11)+aux_y(N+10-1 downto N-1)); 
 	
-	pixel_x_o <= x_o(9 downto 0);
-	pixel_y_o <= y_o(9 downto 0);
+	--pixel_x_o <= x_o(9 downto 0);
+	--pixel_y_o <= y_o(9 downto 0);
+	aux_pixel <= std_logic_vector(unsigned(x_o(9 downto 0))*to_unsigned(640,10) + unsigned(y_o(9 downto 0)));
+	pixel_c_o <= aux_pixel(18 downto 0);
 	--report integer'image(to_integer(aux_x));
 	--report integer'image(to_integer(aux_x(25 downto 15)));
 	--report integer'image(to_integer(aux_y));

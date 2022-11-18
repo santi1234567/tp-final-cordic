@@ -13,7 +13,8 @@ architecture data_processor_tb_arq of data_processor_tb is
 		generic(N: integer:= N);
 		port(
 			data_y_i, data_z_i		: in std_logic_vector(N-1 downto 0);
-			pixel_x_o, pixel_y_o	 : out std_logic_vector (9 downto 0);
+			pixel_c_o: out std_logic_vector (18 downto 0);
+			--pixel_x_o, pixel_y_o	 : out std_logic_vector (9 downto 0);
 			clk_i	  				: in std_logic;
 			rst_i 			  		: in std_logic;
 			ena_i	  		  : in std_logic
@@ -24,7 +25,8 @@ architecture data_processor_tb_arq of data_processor_tb is
 	signal rst_tb	: std_logic := '1';
 	signal ena_tb: std_logic := '1';
 	signal data_y_tb, data_z_tb	: std_logic_vector(N-1 downto 0);
-	signal pixel_x_tb, pixel_y_tb	 : std_logic_vector (9 downto 0);
+	--signal pixel_x_tb, pixel_y_tb	 : std_logic_vector (9 downto 0);
+	signal pixel_c_tb: std_logic_vector (18 downto 0);
 
 
 begin
@@ -42,8 +44,9 @@ begin
 			ena_i 	=> ena_tb,
 			data_y_i	 	=> data_y_tb,
 			data_z_i		=> data_z_tb,
-			pixel_x_o => pixel_x_tb,
-			pixel_y_o => pixel_y_tb
+			pixel_c_o => pixel_c_tb
+			--pixel_x_o => pixel_x_tb,
+			--pixel_y_o => pixel_y_tb
 		);
 
 end;
