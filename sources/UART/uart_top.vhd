@@ -1,13 +1,13 @@
 -------------------------------------------------------------------------------
---  
+--
 --  Copyright (c) 2009 Xilinx Inc.
 --
 --  Project  : Programmable Wave Generator
 --  Module   : uart_top.vhd
 --  Parent   : None
---  Children : uart_rx.vhd led_ctl.vhd 
+--  Children : uart_rx.vhd led_ctl.vhd
 --
---  Description: 
+--  Description:
 --     Ties the UART receiver to the LED controller
 --
 --  Parameters:
@@ -15,7 +15,7 @@
 --
 --  Local Parameters:
 --
---  Notes       : 
+--  Notes       :
 --
 --  Multicycle and False Paths
 --    None
@@ -27,7 +27,7 @@ use IEEE.numeric_std.all;
 
 entity uart_top is
 	generic(
-		BAUD_RATE: integer := 115200;   
+		BAUD_RATE: integer := 115200;
 		CLOCK_RATE: integer := 50E6
 	);
 	port(
@@ -36,7 +36,7 @@ entity uart_top is
 		rst_pin: 	in std_logic;      					-- Active HIGH reset (from pin)
 		rxd_pin: 	in std_logic;      					-- RS232 RXD pin - directly from pin
 		rx_data_rdy: 	out std_logic;  				-- Ready signal for rx_data
-		rx_data: 		out std_logic_vector(7 downto 0);	-- 8 bit data output
+		rx_data: 		out std_logic_vector(7 downto 0)	-- 8 bit data output
 	);
 end;
 
@@ -50,7 +50,7 @@ architecture uart_top_arq of uart_top is
 			signal_dst: out std_logic	-- Synchronized signal
 		);
 	end component;
-	
+
 	component uart_rx is
 		generic(
 			BAUD_RATE: integer := 115200; 	-- Baud rate
@@ -61,20 +61,20 @@ architecture uart_top_arq of uart_top is
 			-- Write side inputs
 			clk_rx: in std_logic;       				-- Clock input
 			rst_clk_rx: in std_logic;   				-- Active HIGH reset - synchronous to clk_rx
-							
+
 			rxd_i: in std_logic;        				-- RS232 RXD pin - Directly from pad
 			rxd_clk_rx: out std_logic;					-- RXD pin after synchronization to clk_rx
-		
+
 			rx_data: out std_logic_vector(7 downto 0);	-- 8 bit data output
 														--  - valid when rx_data_rdy is asserted
 			rx_data_rdy: out std_logic;  				-- Ready signal for rx_data
-			frm_err: out std_logic       				-- The STOP bit was not detected	
+			frm_err: out std_logic       				-- The STOP bit was not detected
 		);
 	end component;
 
 	signal rst_clk_rx: std_logic;
 	signal btn_clk_rx: std_logic;
-  
+
 begin
 	-- Metastability harden the rst - this is an asynchronous input to the
 	-- system (from a pushbutton), and is used in synchronous logic. Therefore
@@ -89,7 +89,7 @@ begin
 		);
 
 
-	uart_rx_i0: uart_rx 
+	uart_rx_i0: uart_rx
 		generic map(
 			CLOCK_RATE 	=> CLOCK_RATE,
 			BAUD_RATE  	=> BAUD_RATE
@@ -97,10 +97,10 @@ begin
 		port map(
 			clk_rx     	=> clk_pin,
 			rst_clk_rx 	=> rst_clk_rx,
-	
+
 			rxd_i      	=> rxd_pin,
 			rxd_clk_rx 	=> open,
-	
+
 			rx_data_rdy	=> rx_data_rdy,
 			rx_data    	=> rx_data,
 			frm_err    	=> open
